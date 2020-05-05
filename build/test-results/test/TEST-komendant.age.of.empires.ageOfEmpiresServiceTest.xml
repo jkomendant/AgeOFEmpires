@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="komendant.age.of.empires.ageOfEmpiresServiceTest" tests="1" skipped="1" failures="0" errors="0" timestamp="2020-05-05T04:08:19" hostname="Home" time="512.024">
+  <properties/>
+  <testcase name="getCivilizations" classname="komendant.age.of.empires.ageOfEmpiresServiceTest" time="512.024">
+    <skipped/>
+  </testcase>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
