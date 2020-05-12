@@ -2,14 +2,16 @@ package komendant.age.of.empires;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.HashMap;
 import java.util.List;
 
-public class ageOfEmpires {
+public class AgeOfEmpires {
 
-    HashMap<String, List<civilizations>> civilization;
+    List<Civilizations> civilizations;
+    List<Unit> units;
+    List<Structure> structures;
+    List<Technology> technologies;
 
-    class civilizations{
+    class Civilizations{
         int id;
         String name;
         String expansion;
@@ -20,7 +22,7 @@ public class ageOfEmpires {
         @SerializedName("unique_tech")
         String[] uniqueTech;
         @SerializedName("team_bonus")
-        String[] teamBonus;
+        String teamBonus;
         @SerializedName("civilization_bonus")
         String[] civBonus;
 
@@ -33,7 +35,7 @@ public class ageOfEmpires {
         String age;
         @SerializedName("created_in")
         String createdIn;
-        Cost[] cost;
+        Cost cost;
         @SerializedName("build_time")
         int buildTime;
         @SerializedName("reload_time")
@@ -55,7 +57,7 @@ public class ageOfEmpires {
         String name;
         String expansion;
         String age;
-        Cost[] cost;
+        Cost cost;
         @SerializedName("build_time")
         int buildTime;
         @SerializedName("hit_points")
@@ -72,7 +74,7 @@ public class ageOfEmpires {
         String age;
         @SerializedName("develops_in")
         String developsIn;
-        Cost[] cost;
+        Cost cost;
         @SerializedName("build_time")
         int buildTime;
     }
