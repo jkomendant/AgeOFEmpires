@@ -17,4 +17,5 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.8.1'
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+    testCompile 'org.mockito:mockito-core:3.3.3'
 }

@@ -1,18 +1,27 @@
 package komendant.age.of.empires;
 
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicArrowButton;
 import java.awt.*;
-import java.util.List;
+import java.util.Objects;
 
 public class AgeOfEmpiresFrame extends JFrame {
 
-    private String[] listing = {"Aztecs", "Britons", "Bizantines", "Celts", "Chinese", "Franks", "Goths",
-                                "Huns", "Japanese", "Koreans", "Mayans", "Mongols", "Persians", "Saracens",
-                                "Spanish", "Teutons", "Turks", "Vikings"};
-    private String[] type = {"Units", "Structures", "Technologies"};
+    JComboBox<String> selection;
+    JComboBox<AgeOfEmpires.Civilizations> civilsComboBox;
+    JComboBox<AgeOfEmpires.Unit> unitsComboBox;
+    JComboBox<AgeOfEmpires.Structure> structureComboBox;
+    JComboBox<AgeOfEmpires.Technology> techComboBox;
+    JPanel leftPanel;
+    JPanel centerPanel;
+    JTextArea civilizationLabel;
+    JLabel unitsLabel;
+    JLabel structureLabel;
+    JLabel technologyLabel;
+    BasicArrowButton nextButton;
+    BasicArrowButton previousButton;
+    AgeOfEmpiresService service;
+    AgeOfEmpiresController controller;
 
     public AgeOfEmpiresFrame(){
         setSize(800, 600);
@@ -20,43 +29,139 @@ public class AgeOfEmpiresFrame extends JFrame {
         setTitle("Age of Empires Resources");
         setLayout(new BorderLayout());
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://age-of-empires-2-api.herokuapp.com/api/v1/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        AgeOfEmpiresService service = retrofit.create(AgeOfEmpiresService.class);
+        leftPanel = new JPanel();
+        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
 
-        AgeOfEmpiresController controller = new AgeOfEmpiresController(service);
-        controller.requestData();
-        List<AgeOfEmpires.Civilizations> civilization =  new AgeOfEmpires().civilizations;
-        List<AgeOfEmpires.Structure> structures = new AgeOfEmpires().structures;
-        List<AgeOfEmpires.Technology> technologies = new AgeOfEmpires().technologies;
-        List<AgeOfEmpires.Unit> units = new AgeOfEmpires().units;
+        centerPanel = new JPanel();
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
 
-        JLabel civilizationLabel = new JLabel("Civilization:");
-        JComboBox civils = new JComboBox(listing);
-        JLabel typesLabel = new JLabel("Type:");
-        JComboBox types = new JComboBox(type);
-        JButton enter = new JButton("Enter");
+        civilizationLabel = new JTextArea();
+        unitsLabel = new JLabel();
+        structureLabel = new JLabel();
+        technologyLabel = new JLabel();
+        nextButton = new BasicArrowButton(BasicArrowButton.EAST);
+        previousButton = new BasicArrowButton(BasicArrowButton.WEST);
+
+        selection = new JComboBox<>();
+        selection.isEditable();
+        selection.addItem("Civilizations");
+        selection.addItem("Units");
+        selection.addItem("Structures");
+        selection.addItem("Technologies");
+
+        civilsComboBox = new JComboBox<>();
+        civilsComboBox.isEditable();
+        civilsComboBox.isVisible();
+        unitsComboBox = new JComboBox<>();
+        unitsComboBox.isEditable();
+        unitsComboBox.setVisible(false);
+        structureComboBox = new JComboBox<>();
+        structureComboBox.isEditable();
+        structureComboBox.setVisible(false);
+        techComboBox = new JComboBox<>();
+        techComboBox.isEditable();
+        techComboBox.setVisible(false);
+
+        leftPanel.add(selection);
+
+        leftPanel.add(civilsComboBox);
+        leftPanel.add(unitsComboBox);
+        leftPanel.add(structureComboBox);
+        leftPanel.add(techComboBox);
+        add(leftPanel, BorderLayout.WEST);
+        add(centerPanel, BorderLayout.CENTER);
+
+        centerPanel.add(civilizationLabel);
+
+        selection.addActionListener(ActionEvent -> setComboBoxes(selection));
+
+        civilsComboBox.addActionListener(ActionEvent -> getCivilizations());
+        unitsComboBox.addActionListener(ActionEvent -> getUnits());
+        structureComboBox.addActionListener(ActionEvent -> getStructures());
+        techComboBox.addActionListener(ActionEvent -> getTech());
+
         JPanel topPanel = new JPanel();
         add(topPanel, BorderLayout.NORTH);
         JLabel headerMessage = new JLabel("Find out the Resources needed in Age of Empires II!");
         topPanel.add(headerMessage);
-        JPanel leftPanel = new JPanel();
-        add(leftPanel, BorderLayout.WEST);
-        leftPanel.setLayout(new GridLayout(3,2));
-        leftPanel.add(civilizationLabel);
-        leftPanel.add(civils);
-        leftPanel.add(typesLabel);
-        leftPanel.add(types);
-        leftPanel.add(enter);
-        JPanel mainArea = new JPanel();
-        add(mainArea, BorderLayout.CENTER);
-        JTextArea output = new JTextArea();
-        mainArea.add(output);
 
-        //enter.addActionListener(actionEvent -> );
+        try{
+            service = new AgeOfEmpiresFactory().getInstance();
+            controller = new AgeOfEmpiresController(service, civilizationLabel, unitsLabel,
+                    structureLabel, technologyLabel, nextButton, previousButton);
+            controller.requestCivilizations(civilsComboBox);
+            controller.requestUnits(unitsComboBox);
+            controller.requestStructures(structureComboBox);
+            controller.requestTechnologies(techComboBox);
 
+        }
+        catch (Exception t){
+            t.printStackTrace();
+            AgeOfEmpires.NotFoundError message = new AgeOfEmpires.NotFoundError();
+            System.out.println(message.message);
+        }
+
+    }
+
+    public void setComboBoxes(JComboBox<String> comboBox){
+        switch (Objects.requireNonNull(comboBox.getSelectedItem()).toString()){
+            case "Civilizations":
+                civilsComboBox.setVisible(true);
+                unitsComboBox.setVisible(false);
+                structureComboBox.setVisible(false);
+                techComboBox.setVisible(false);
+                civilizationLabel.setText("");
+                break;
+            case "Units":
+                civilsComboBox.setVisible(false);
+                unitsComboBox.setVisible(true);
+                structureComboBox.setVisible(false);
+                techComboBox.setVisible(false);
+                civilizationLabel.setText("");
+                break;
+            case "Structures":
+                civilsComboBox.setVisible(false);
+                unitsComboBox.setVisible(false);
+                structureComboBox.setVisible(true);
+                techComboBox.setVisible(false);
+                civilizationLabel.setText("");
+                break;
+            case "Technologies":
+                civilsComboBox.setVisible(false);
+                unitsComboBox.setVisible(false);
+                structureComboBox.setVisible(false);
+                techComboBox.setVisible(true);
+                civilizationLabel.setText("");
+                break;
+
+        }
+    }
+
+    public void getCivilizations(){
+        AgeOfEmpires.Civilizations selectCivilization = (AgeOfEmpires.Civilizations) civilsComboBox.getSelectedItem();
+        assert selectCivilization != null;
+        int index = selectCivilization.id -1;
+        controller.requestCivilizationsName(index);
+    }
+    public void getUnits(){
+        AgeOfEmpires.Unit selectCivilization = (AgeOfEmpires.Unit) unitsComboBox.getSelectedItem();
+        assert selectCivilization != null;
+        int index = selectCivilization.id -1;
+        controller.requestUnitsName(index);
+    }
+
+    public void getStructures(){
+        AgeOfEmpires.Structure selectStructure = (AgeOfEmpires.Structure) structureComboBox.getSelectedItem();
+        assert selectStructure != null;
+        int index = selectStructure.id -1;
+        controller.requestStructureName(index);
+    }
+
+    public void getTech(){
+        AgeOfEmpires.Technology selectTech = (AgeOfEmpires.Technology) techComboBox.getSelectedItem();
+        assert selectTech != null;
+        int index = selectTech.id -1;
+        controller.requestTechName(index);
     }
 
     public static void main(String[] args) {
@@ -64,5 +169,3 @@ public class AgeOfEmpiresFrame extends JFrame {
 
     }
 }
-
-

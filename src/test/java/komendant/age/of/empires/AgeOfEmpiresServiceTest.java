@@ -1,8 +1,6 @@
 package komendant.age.of.empires;
 
 import org.junit.Test;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.io.IOException;
 import java.util.List;
@@ -14,11 +12,7 @@ public class AgeOfEmpiresServiceTest {
     @Test
     public void getCivilizations() throws IOException {
         //given
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://age-of-empires-2-api.herokuapp.com/api/v1/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        AgeOfEmpiresService service = retrofit.create(AgeOfEmpiresService.class);
+        AgeOfEmpiresService service = new AgeOfEmpiresFactory().getInstance();
 
         //when
         AgeOfEmpires civilization = service.getCivilizations().execute().body();
@@ -29,24 +23,18 @@ public class AgeOfEmpiresServiceTest {
         assertNotNull(civil);
         AgeOfEmpires.Civilizations civilization1 = civil.get(0);
         assertNotNull(civilization1);
-        //assertNotNull(civilization1.id);
+        assert(civilization1.id > 0);
         assertNotNull(civilization1.name);
         assertNotNull(civilization1.armyType);
         assertNotNull(civilization1.expansion);
         assertNotNull(civilization1.civBonus);
-        assertNotNull(civilization1.uniqueTech);
         assertNotNull(civilization1.teamBonus);
-        assertNotNull(civilization1.uniqueUnit);
     }
 
     @Test
     public void getUnits() throws IOException {
         //given
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://age-of-empires-2-api.herokuapp.com/api/v1/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        AgeOfEmpiresService service = retrofit.create(AgeOfEmpiresService.class);
+        AgeOfEmpiresService service = new AgeOfEmpiresFactory().getInstance();
 
         //when
         AgeOfEmpires units = service.getUnits().execute().body();
@@ -57,20 +45,23 @@ public class AgeOfEmpiresServiceTest {
         assertNotNull(unitList);
         AgeOfEmpires.Unit unit = unitList.get(0);
         assertNotNull(unit);
-        //assertNotNull(unit.id);
+        assert(unit.id > 0);
         assertNotNull(unit.age);
         assertNotNull(unit.name);
         assertNotNull(unit.armor);
-        //assertNotNull(unit.attack);
-        assertNotNull(unit.createdIn);
+        assert(unit.attack > 0);
         assertNotNull(unit.expansion);
-        //assertNotNull(unit.attackDelay);
-        //assertNotNull(unit.buildTime);
+        assert(unit.attackDelay > 0);
+        assert(unit.buildTime > 0);
         assertNotNull(unit.cost);
-        //assertNotNull(unit.hitPoints);
-        //assertNotNull(unit.lineOfSight);
-        //assertNotNull(unit.movementRate);
-        //assertNotNull(unit.reload_time);
+        assert(unit.cost.food == 0);
+        assert(unit.cost.wood == 25);
+        assert(unit.cost.stone == 0);
+        assert(unit.cost.gold == 45);
+        assert(unit.hitPoints > 0);
+        assert(unit.lineOfSight > 0);
+        assert(unit.movementRate > 0);
+        assert(unit.reload_time > 0);
 
 
     }
@@ -78,11 +69,7 @@ public class AgeOfEmpiresServiceTest {
     @Test
     public void getStructures() throws IOException {
         //given
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://age-of-empires-2-api.herokuapp.com/api/v1/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        AgeOfEmpiresService service = retrofit.create(AgeOfEmpiresService.class);
+        AgeOfEmpiresService service = new AgeOfEmpiresFactory().getInstance();
 
         //when
         AgeOfEmpires structures = service.getStructures().execute().body();
@@ -93,26 +80,27 @@ public class AgeOfEmpiresServiceTest {
         assertNotNull(structureList);
         AgeOfEmpires.Structure structure = structureList.get(0);
         assertNotNull(structure);
-        //assertNotNull(structure.id);
+        assert(structure.id > 0);
         assertNotNull(structure.age);
         assertNotNull(structure.armor);
         assertNotNull(structure.expansion);
         assertNotNull(structure.name);
-        //assertNotNull(structure.buildTime);
+        assert(structure.buildTime > 0);
         assertNotNull(structure.cost);
-        //assertNotNull(structure.hitPoints);
-        //assertNotNull(structure.lineOfSight);
+        assert(structure.cost.food >= 0);
+        assert(structure.cost.wood >= 0);
+        assert(structure.cost.stone >= 0);
+        assert(structure.cost.gold >= 0);
+
+        assert(structure.hitPoints > 0);
+        assert(structure.lineOfSight > 0);
 
     }
 
     @Test
     public void getTechnologies() throws IOException {
         //given
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://age-of-empires-2-api.herokuapp.com/api/v1/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        AgeOfEmpiresService service = retrofit.create(AgeOfEmpiresService.class);
+        AgeOfEmpiresService service = new AgeOfEmpiresFactory().getInstance();
 
         //when
         AgeOfEmpires technologies = service.getTechnologies().execute().body();
@@ -124,12 +112,16 @@ public class AgeOfEmpiresServiceTest {
         assertNotNull(technologyList);
         AgeOfEmpires.Technology technology = technologyList.get(0);
         assertNotNull(technology);
-        //assertNotNull(technology.id);
+        assert(technology.id > 0);
         assertNotNull(technology.age);
-        assertNotNull(technology.developsIn);
         assertNotNull(technology.expansion);
         assertNotNull(technology.name);
-        //assertNotNull(technology.buildTime);
+        assert(technology.buildTime > 0);
         assertNotNull(technology.cost);
+        assert(technology.cost.food >= 0);
+        assert(technology.cost.wood >= 0);
+        assert(technology.cost.stone >= 0);
+        assert(technology.cost.gold >= 0);
+
     }
 }
