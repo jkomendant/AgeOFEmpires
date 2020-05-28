@@ -87,7 +87,6 @@ public class AgeOfEmpiresController implements Callback<AgeOfEmpires> {
             public void onResponse(Call<AgeOfEmpires> call, Response<AgeOfEmpires> response) {
                 assert response.body() != null;
                 AgeOfEmpires structure = response.body();
-                assert structure != null;
                 List<AgeOfEmpires.Structure> structureList = structure.structures;
                 for(AgeOfEmpires.Structure unit : structureList){
                     structureComboBox.addItem(unit);
@@ -108,7 +107,6 @@ public class AgeOfEmpiresController implements Callback<AgeOfEmpires> {
             public void onResponse(Call<AgeOfEmpires> call, Response<AgeOfEmpires> response) {
                 assert response.body() != null;
                 AgeOfEmpires technologies = response.body();
-                assert technologies != null;
 
                 List<AgeOfEmpires.Technology> technologyList = technologies.technologies;
                 for(AgeOfEmpires.Technology tech : technologyList){
