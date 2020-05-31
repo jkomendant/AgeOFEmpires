@@ -87,10 +87,10 @@ public class AgeOfEmpiresServiceTest {
         assertNotNull(structure.name);
         assert(structure.buildTime > 0);
         assertNotNull(structure.cost);
-        assert(structure.cost.food >= 0);
-        assert(structure.cost.wood >= 0);
-        assert(structure.cost.stone >= 0);
-        assert(structure.cost.gold >= 0);
+        assert(structure.cost.food == 0);
+        assert(structure.cost.wood == 175);
+        assert(structure.cost.stone == 0);
+        assert(structure.cost.gold == 0);
 
         assert(structure.hitPoints > 0);
         assert(structure.lineOfSight > 0);
@@ -118,10 +118,10 @@ public class AgeOfEmpiresServiceTest {
         assertNotNull(technology.name);
         assert(technology.buildTime > 0);
         assertNotNull(technology.cost);
-        assert(technology.cost.food >= 0);
-        assert(technology.cost.wood >= 0);
-        assert(technology.cost.stone >= 0);
-        assert(technology.cost.gold >= 0);
+        assert(technology.cost.food == 125);
+        assert(technology.cost.wood == 0);
+        assert(technology.cost.stone == 0);
+        assert(technology.cost.gold == 75);
 
     }
 }

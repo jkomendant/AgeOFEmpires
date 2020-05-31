@@ -98,9 +98,13 @@ public class AgeOfEmpires {
     }
 
     class Cost{
+        @SerializedName("Wood")
         int wood;
+        @SerializedName("Food")
         int food;
+        @SerializedName("Stone")
         int stone;
+        @SerializedName("Gold")
         int gold;
     }
 }
