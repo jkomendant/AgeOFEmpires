@@ -17,23 +17,34 @@ public class AgeOfEmpiresFrame extends JFrame {
     JPanel unitsPanel;
     JPanel structurePanel;
     JPanel technologyPanel;
+    JPanel civilizationImagePanel;
+    JPanel unitsImagePanel;
+    JPanel structureImagePanel;
+    JPanel techImagePanel;
 
-    JLabel civilizationNameLabel;
+    JLabel civilizationImage;
     JLabel civilizationName;
     JLabel civilizationExpansionLabel;
     JLabel civilizationExpansion;
     JLabel armyTypeLabel;
     JLabel armyType;
+    JLabel uniqueUnitLabel;
+    JLabel uniqueUnit;
+    JLabel uniqueTechLabel;
+    JLabel uniqueTech;
     JLabel teamBonusLabel;
     JLabel teamBonus;
     JLabel civBonusLabel;
     JTextArea civBonus;
-    JLabel unitsNameLabel;
+
+    JLabel unitsImage;
     JLabel unitsName;
     JLabel unitsExpansionLabel;
     JLabel unitsExpansion;
     JLabel unitsAgeLabel;
     JLabel unitsAge;
+    JLabel unitsCreatedInLabel;
+    JLabel unitsCreatedIn;
     JLabel unitsWoodLabel;
     JLabel unitsWood;
     JLabel unitsFoodLabel;
@@ -44,10 +55,6 @@ public class AgeOfEmpiresFrame extends JFrame {
     JLabel unitsGold;
     JLabel unitsBuildTimeLabel;
     JLabel unitsBuildTime;
-    JLabel unitsReloadTimeLabel;
-    JLabel unitsReloadTime;
-    JLabel unitsAttackDelayLabel;
-    JLabel unitsAttackDelay;
     JLabel unitsMovementRateLabel;
     JLabel unitsMovementRate;
     JLabel unitsLineOfSightLabel;
@@ -58,7 +65,8 @@ public class AgeOfEmpiresFrame extends JFrame {
     JLabel unitsAttack;
     JLabel unitsArmorLabel;
     JLabel unitsArmor;
-    JLabel structureNameLabel;
+
+    JLabel structureImage;
     JLabel structureName;
     JLabel structureExpansionLabel;
     JLabel structureExpansion;
@@ -81,12 +89,14 @@ public class AgeOfEmpiresFrame extends JFrame {
     JLabel structureArmorLabel;
     JLabel structureArmor;
 
-    JLabel techNameLabel;
+    JLabel techImage;
     JLabel techName;
     JLabel techExpansionLabel;
     JLabel techExpansion;
     JLabel techAgeLabel;
     JLabel techAge;
+    JLabel techDevelopsInLabel;
+    JLabel techDevelopsIn;
     JLabel techWoodLabel;
     JLabel techWood;
     JLabel techFoodLabel;
@@ -102,7 +112,7 @@ public class AgeOfEmpiresFrame extends JFrame {
     AgeOfEmpiresController controller;
 
     public AgeOfEmpiresFrame(){
-        setSize(800, 600);
+        setSize(800, 700);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("Age of Empires Resources");
         setLayout(new BorderLayout());
@@ -114,18 +124,23 @@ public class AgeOfEmpiresFrame extends JFrame {
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
 
         civilizationPanel = new JPanel();
-        civilizationPanel.setLayout(new GridLayout(5,2));
+        civilizationPanel.setLayout(new GridLayout(6,2));
+        civilizationImagePanel = new JPanel();
+        civilizationImagePanel.setLayout(new GridLayout(1, 2));
 
-        civilizationNameLabel = new JLabel();
-        civilizationNameLabel.setText("Civilization Name:");
+        civilizationImage = new JLabel();
         civilizationName = new JLabel();
-
+        civilizationName.setFont(new Font("Serif", Font.BOLD, 20));
         civilizationExpansionLabel = new JLabel();
-        civilizationExpansionLabel.setText("Expansion:");
+        civilizationExpansionLabel.setText("Expansion of Game:");
         civilizationExpansion = new JLabel();
         armyTypeLabel = new JLabel();
         armyTypeLabel.setText("Army Type:");
         armyType = new JLabel();
+        uniqueUnitLabel = new JLabel("Unique Unit:");
+        uniqueUnit = new JLabel();
+        uniqueTechLabel = new JLabel("Unique Technology:");
+        uniqueTech = new JLabel();
         teamBonusLabel = new JLabel();
         teamBonusLabel.setText("Team Bonus:");
         teamBonus = new JLabel();
@@ -133,27 +148,38 @@ public class AgeOfEmpiresFrame extends JFrame {
         civBonusLabel.setText("Civilization Bonus:");
         civBonus = new JTextArea();
         civBonus.setEditable(false);
+        civBonus.setLineWrap(true);
+        civBonus.setWrapStyleWord(true);
 
-        civilizationPanel.add(civilizationNameLabel);
-        civilizationPanel.add(civilizationName);
+        civilizationImagePanel.add(civilizationName);
+        civilizationImagePanel.add(civilizationImage);
         civilizationPanel.add(civilizationExpansionLabel);
         civilizationPanel.add(civilizationExpansion);
         civilizationPanel.add(armyTypeLabel);
         civilizationPanel.add(armyType);
+        civilizationPanel.add(uniqueUnitLabel);
+        civilizationPanel.add(uniqueUnit);
+        civilizationPanel.add(uniqueTechLabel);
+        civilizationPanel.add(uniqueTech);
         civilizationPanel.add(teamBonusLabel);
         civilizationPanel.add(teamBonus);
         civilizationPanel.add(civBonusLabel);
         civilizationPanel.add(civBonus);
 
         unitsPanel = new JPanel();
-        unitsPanel.setLayout(new GridLayout(16, 2));
+        unitsPanel.setLayout(new GridLayout(14, 2));
+        unitsImagePanel = new JPanel();
+        unitsImagePanel.setLayout(new GridLayout(1, 2));
 
-        unitsNameLabel = new JLabel("Unit Name:");
         unitsName  = new JLabel();
-        unitsExpansionLabel = new JLabel("Expansion:");
+        unitsName.setFont(new Font("Serif", Font.BOLD, 20));
+        unitsImage = new JLabel();
+        unitsExpansionLabel = new JLabel("Expansion of Game:");
         unitsExpansion = new JLabel();
         unitsAgeLabel = new JLabel("Age:");
         unitsAge = new JLabel();
+        unitsCreatedInLabel = new JLabel("Created In:");
+        unitsCreatedIn = new JLabel();
         unitsWoodLabel = new JLabel("Required Wood:");
         unitsWood = new JLabel();
         unitsFoodLabel = new JLabel("Required Food:");
@@ -162,12 +188,8 @@ public class AgeOfEmpiresFrame extends JFrame {
         unitsGold = new JLabel();
         unitsStoneLabel = new JLabel("Required Stone:");
         unitsStone = new JLabel();
-        unitsBuildTimeLabel = new JLabel("Build Time:");
+        unitsBuildTimeLabel = new JLabel("Build Time (in seconds):");
         unitsBuildTime = new JLabel();
-        unitsReloadTimeLabel = new JLabel("Reload Time:");
-        unitsReloadTime = new JLabel();
-        unitsAttackDelayLabel = new JLabel("Attack Delay:");
-        unitsAttackDelay = new JLabel();
         unitsMovementRateLabel = new JLabel("Movement Rate:");
         unitsMovementRate = new JLabel();
         unitsLineOfSightLabel = new JLabel("Line of Sight:");
@@ -179,12 +201,14 @@ public class AgeOfEmpiresFrame extends JFrame {
         unitsArmorLabel = new JLabel("Armor:");
         unitsArmor = new JLabel();
 
-        unitsPanel.add(unitsNameLabel);
-        unitsPanel.add(unitsName);
+        unitsImagePanel.add(unitsName);
+        unitsImagePanel.add(unitsImage);
         unitsPanel.add(unitsExpansionLabel);
         unitsPanel.add(unitsExpansion);
         unitsPanel.add(unitsAgeLabel);
         unitsPanel.add(unitsAge);
+        unitsPanel.add(unitsCreatedInLabel);
+        unitsPanel.add(unitsCreatedIn);
         unitsPanel.add(unitsWoodLabel);
         unitsPanel.add(unitsWood);
         unitsPanel.add(unitsFoodLabel);
@@ -195,10 +219,6 @@ public class AgeOfEmpiresFrame extends JFrame {
         unitsPanel.add(unitsStone);
         unitsPanel.add(unitsBuildTimeLabel);
         unitsPanel.add(unitsBuildTime);
-        unitsPanel.add(unitsReloadTimeLabel);
-        unitsPanel.add(unitsReloadTime);
-        unitsPanel.add(unitsAttackDelayLabel);
-        unitsPanel.add(unitsAttackDelay);
         unitsPanel.add(unitsMovementRateLabel);
         unitsPanel.add(unitsMovementRate);
         unitsPanel.add(unitsLineOfSightLabel);
@@ -211,11 +231,14 @@ public class AgeOfEmpiresFrame extends JFrame {
         unitsPanel.add(unitsArmor);
 
         structurePanel = new JPanel();
-        structurePanel.setLayout(new GridLayout(11, 2));
+        structurePanel.setLayout(new GridLayout(10, 2));
+        structureImagePanel = new JPanel();
+        structureImagePanel.setLayout(new GridLayout(1, 2));
 
-        structureNameLabel = new JLabel("Building Name:");
+        structureImage = new JLabel();
         structureName = new JLabel();
-        structureExpansionLabel = new JLabel("Expansion:");
+        structureName.setFont(new Font("Serif", Font.BOLD, 20));
+        structureExpansionLabel = new JLabel("Expansion of Game:");
         structureExpansion = new JLabel();
         structureAgeLabel = new JLabel("Age:");
         structureAge = new JLabel();
@@ -236,8 +259,8 @@ public class AgeOfEmpiresFrame extends JFrame {
         structureArmorLabel = new JLabel("Armor:");
         structureArmor = new JLabel();
 
-        structurePanel.add(structureNameLabel);
-        structurePanel.add(structureName);
+        structureImagePanel.add(structureName);
+        structureImagePanel.add(structureImage);
         structurePanel.add(structureExpansionLabel);
         structurePanel.add(structureExpansion);
         structurePanel.add(structureAgeLabel);
@@ -261,13 +284,18 @@ public class AgeOfEmpiresFrame extends JFrame {
 
         technologyPanel = new JPanel();
         technologyPanel.setLayout(new GridLayout(8, 2));
+        techImagePanel = new JPanel();
+        techImagePanel.setLayout(new GridLayout(1, 2));
 
-        techNameLabel = new JLabel("Technology Name:");
+        techImage = new JLabel();
         techName = new JLabel();
-        techExpansionLabel = new JLabel("Expansion:");
+        techName.setFont(new Font("Serif", Font.BOLD, 20));
+        techExpansionLabel = new JLabel("Expansion of Game:");
         techExpansion = new JLabel();
         techAgeLabel = new JLabel("Age:");
         techAge = new JLabel();
+        techDevelopsInLabel = new JLabel("Develops In:");
+        techDevelopsIn = new JLabel();
         techWoodLabel = new JLabel("Required Wood:");
         techWood = new JLabel();
         techFoodLabel = new JLabel("Required Food:");
@@ -276,15 +304,17 @@ public class AgeOfEmpiresFrame extends JFrame {
         techStone = new JLabel();
         techGoldLabel = new JLabel("Required Gold:");
         techGold = new JLabel();
-        techBuildTimeLabel = new JLabel("Technology Research Time:");
+        techBuildTimeLabel = new JLabel("Technology Research Time (in seconds):");
         techBuildTime = new JLabel();
 
-        technologyPanel.add(techNameLabel);
-        technologyPanel.add(techName);
+        techImagePanel.add(techName);
+        techImagePanel.add(techImage);
         technologyPanel.add(techExpansionLabel);
         technologyPanel.add(techExpansion);
         technologyPanel.add(techAgeLabel);
         technologyPanel.add(techAge);
+        technologyPanel.add(techDevelopsInLabel);
+        technologyPanel.add(techDevelopsIn);
         technologyPanel.add(techWoodLabel);
         technologyPanel.add(techWood);
         technologyPanel.add(techFoodLabel);
@@ -325,9 +355,13 @@ public class AgeOfEmpiresFrame extends JFrame {
         add(leftPanel, BorderLayout.WEST);
         add(centerPanel, BorderLayout.CENTER);
 
+        centerPanel.add(civilizationImagePanel);
         centerPanel.add(civilizationPanel);
+        centerPanel.add(unitsImagePanel);
         centerPanel.add(unitsPanel);
+        centerPanel.add(structureImagePanel);
         centerPanel.add(structurePanel);
+        centerPanel.add(techImagePanel);
         centerPanel.add(technologyPanel);
 
         selection.addActionListener(ActionEvent -> setComboBoxes(selection));
@@ -345,30 +379,30 @@ public class AgeOfEmpiresFrame extends JFrame {
 
         try{
             service = new AgeOfEmpiresFactory().getInstance();
-            controller = new AgeOfEmpiresController(service, civilizationName, civilizationExpansion,
-                    armyType, teamBonus, civBonus, unitsName, unitsExpansion, unitsAge, unitsWood, unitsFood,
-                    unitsStone, unitsGold, unitsBuildTime, unitsReloadTime, unitsAttackDelay, unitsMovementRate,
-                    unitsLineOfSight, unitsHitPoints, unitsAttack, unitsArmor, structureName,
-                    structureExpansion, structureAge, structureWood, structureFood, structureStone,
-                    structureGold, structureBuildTime, structureHitPoints, structureLineOfSight,
-                    structureArmor, techName, techExpansion, techAge, techWood, techFood, techStone, techGold,
-                    techBuildTime);
+            controller = new AgeOfEmpiresController(service, civilizationName, civilizationImage,
+                    civilizationExpansion, armyType, uniqueUnit, uniqueTech, teamBonus, civBonus, unitsImage, unitsName, unitsExpansion,
+                    unitsAge, unitsCreatedIn, unitsWood, unitsFood, unitsStone, unitsGold, unitsBuildTime, unitsMovementRate,
+                    unitsLineOfSight, unitsHitPoints, unitsAttack,
+                    unitsArmor, structureImage, structureName, structureExpansion, structureAge, structureWood, structureFood,
+                    structureStone, structureGold, structureBuildTime, structureHitPoints, structureLineOfSight,
+                    structureArmor, techImage, techName, techExpansion, techAge, techDevelopsIn, techWood, techFood, techStone,
+                    techGold, techBuildTime);
             controller.requestCivilizations(civilizationsComboBox);
             controller.requestUnits(unitsComboBox);
             controller.requestStructures(structureComboBox);
             controller.requestTechnologies(techComboBox);
             unitsPanel.setVisible(false);
+            unitsImagePanel.setVisible(false);
             structurePanel.setVisible(false);
+            structureImagePanel.setVisible(false);
             technologyPanel.setVisible(false);
-
-
+            techImagePanel.setVisible(false);
         }
         catch (Exception t){
             t.printStackTrace();
             AgeOfEmpires.NotFoundError message = new AgeOfEmpires.NotFoundError();
             System.out.println(message.message);
         }
-
     }
 
     public void setComboBoxes(JComboBox<String> comboBox){
@@ -378,9 +412,13 @@ public class AgeOfEmpiresFrame extends JFrame {
                 unitsComboBox.setVisible(false);
                 structureComboBox.setVisible(false);
                 techComboBox.setVisible(false);
+                civilizationImagePanel.setVisible(true);
                 civilizationPanel.setVisible(true);
                 unitsPanel.setVisible(false);
+                unitsImagePanel.setVisible(false);
                 structurePanel.setVisible(false);
+                structureImagePanel.setVisible(false);
+                techImagePanel.setVisible(false);
                 technologyPanel.setVisible(false);
                 break;
             case "Units":
@@ -388,9 +426,13 @@ public class AgeOfEmpiresFrame extends JFrame {
                 unitsComboBox.setVisible(true);
                 structureComboBox.setVisible(false);
                 techComboBox.setVisible(false);
+                civilizationImagePanel.setVisible(false);
                 civilizationPanel.setVisible(false);
                 unitsPanel.setVisible(true);
+                unitsImagePanel.setVisible(true);
                 structurePanel.setVisible(false);
+                structureImagePanel.setVisible(false);
+                techImagePanel.setVisible(false);
                 technologyPanel.setVisible(false);
                 break;
             case "Structures":
@@ -398,9 +440,13 @@ public class AgeOfEmpiresFrame extends JFrame {
                 unitsComboBox.setVisible(false);
                 structureComboBox.setVisible(true);
                 techComboBox.setVisible(false);
+                civilizationImagePanel.setVisible(false);
                 civilizationPanel.setVisible(false);
                 unitsPanel.setVisible(false);
+                unitsImagePanel.setVisible(false);
+                structureImagePanel.setVisible(true);
                 structurePanel.setVisible(true);
+                techImagePanel.setVisible(false);
                 technologyPanel.setVisible(false);
                 break;
             case "Technologies":
@@ -408,9 +454,13 @@ public class AgeOfEmpiresFrame extends JFrame {
                 unitsComboBox.setVisible(false);
                 structureComboBox.setVisible(false);
                 techComboBox.setVisible(true);
+                civilizationImagePanel.setVisible(false);
                 civilizationPanel.setVisible(false);
                 unitsPanel.setVisible(false);
+                unitsImagePanel.setVisible(false);
                 structurePanel.setVisible(false);
+                structureImagePanel.setVisible(false);
+                techImagePanel.setVisible(true);
                 technologyPanel.setVisible(true);
                 break;
 
@@ -423,6 +473,7 @@ public class AgeOfEmpiresFrame extends JFrame {
         int index = selectCivilization.id -1;
         controller.requestCivilizationsName(index);
     }
+
     public void getUnits(){
         AgeOfEmpires.Unit selectCivilization = (AgeOfEmpires.Unit) unitsComboBox.getSelectedItem();
         assert selectCivilization != null;
@@ -443,7 +494,6 @@ public class AgeOfEmpiresFrame extends JFrame {
         int index = selectTech.id -1;
         controller.requestTechName(index);
     }
-
 
     public static void main(String[] args) {
         new AgeOfEmpiresFrame().setVisible(true);

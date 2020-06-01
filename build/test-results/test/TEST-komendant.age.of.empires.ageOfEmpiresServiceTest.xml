@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="komendant.age.of.empires.AgeOfEmpiresServiceTest" tests="1" skipped="1" failures="0" errors="0" timestamp="2020-05-31T07:26:35" hostname="Home" time="103.126">
+<testsuite name="komendant.age.of.empires.AgeOfEmpiresServiceTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-06-01T01:57:48" hostname="Home" time="1.353">
   <properties/>
-  <testcase name="getTechnologies" classname="komendant.age.of.empires.AgeOfEmpiresServiceTest" time="103.126">
-    <skipped/>
-  </testcase>
+  <testcase name="getCivilizations" classname="komendant.age.of.empires.AgeOfEmpiresServiceTest" time="1.353"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

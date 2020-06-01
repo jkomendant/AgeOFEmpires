@@ -17,6 +17,10 @@ public class AgeOfEmpires {
         String expansion;
         @SerializedName("army_type")
         String armyType;
+        @SerializedName("unique_unit")
+        String[] uniqueUnit;
+        @SerializedName("unique_tech")
+        String[] uniqueTech;
         @SerializedName("team_bonus")
         String teamBonus;
         @SerializedName("civilization_bonus")
@@ -35,13 +39,11 @@ public class AgeOfEmpires {
         String name;
         String expansion;
         String age;
+        @SerializedName("created_in")
+        String createdIn;
         Cost cost;
         @SerializedName("build_time")
         int buildTime;
-        @SerializedName("reload_time")
-        double reload_time;
-        @SerializedName("attack_delay")
-        double attackDelay;
         @SerializedName("movement_rate")
         double movementRate;
         @SerializedName("line_of_sight")
@@ -83,6 +85,8 @@ public class AgeOfEmpires {
         String name;
         String expansion;
         String age;
+        @SerializedName("develops_in")
+        String developsIn;
         Cost cost;
         @SerializedName("build_time")
         int buildTime;

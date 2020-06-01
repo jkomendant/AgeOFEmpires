@@ -26,6 +26,8 @@ public class AgeOfEmpiresServiceTest {
         assert(civilization1.id > 0);
         assertNotNull(civilization1.name);
         assertNotNull(civilization1.armyType);
+        assertNotNull(civilization1.uniqueUnit);
+        assertNotNull(civilization1.uniqueTech);
         assertNotNull(civilization1.expansion);
         assertNotNull(civilization1.civBonus);
         assertNotNull(civilization1.teamBonus);
@@ -51,9 +53,9 @@ public class AgeOfEmpiresServiceTest {
         assertNotNull(unit.armor);
         assert(unit.attack > 0);
         assertNotNull(unit.expansion);
-        assert(unit.attackDelay > 0);
         assert(unit.buildTime > 0);
         assertNotNull(unit.cost);
+        assertNotNull(unit.createdIn);
         assert(unit.cost.food == 0);
         assert(unit.cost.wood == 25);
         assert(unit.cost.stone == 0);
@@ -61,7 +63,6 @@ public class AgeOfEmpiresServiceTest {
         assert(unit.hitPoints > 0);
         assert(unit.lineOfSight > 0);
         assert(unit.movementRate > 0);
-        assert(unit.reload_time > 0);
 
 
     }
@@ -117,6 +118,7 @@ public class AgeOfEmpiresServiceTest {
         assertNotNull(technology.expansion);
         assertNotNull(technology.name);
         assert(technology.buildTime > 0);
+        assertNotNull(technology.developsIn);
         assertNotNull(technology.cost);
         assert(technology.cost.food == 125);
         assert(technology.cost.wood == 0);
